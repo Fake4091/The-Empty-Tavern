@@ -1,0 +1,9 @@
+.right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1vw;
+}
+.username {
+  padding: 1vh 1vw 0 0;
+}

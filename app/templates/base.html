@@ -1,10 +1,32 @@
+{% load static %}
 <!doctype html>
 <html>
   <head>
     <title>The Empty Tavern - {{page}}</title>
     {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
   </head>
   <body>
+    <div class="container">
+      <ul class="nav bg-info">
+        <li class="nav-item">
+          {% if user.is_authenticated %}
+          <div class="right">
+            <p class="username">Hi {{ user.username }}!<p>
+            <form action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button class="btn btn-danger" type="submit">Log Out</button>
+            </form>
+          </div>
+          {% else %}
+          <div class="right">
+            <p class="username">You are not logged in</p>
+            <a href="{% url 'signup' %}"><input type="button" class="btn btn-primary" value="Sign Up"/></a>
+            <a href="{% url 'login' %}"><input type="button" class="btn btn-primary" value="Log In"/></a>
+          </div>
+          {% endif %}
+        </li>
+      </ul>
     {% block content %}{% endblock %}
   </body>
 </html>

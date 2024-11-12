@@ -1,3 +1,6 @@
-{% extends "base.html" %} {% block content %}
-<h1>Test</h1>
+{% extends "base.html" %} {% load bootstrap5 %} {% block content %}
+<h1>Home</h1>
+<a href="{% url 'new_player' %}">
+  <input type="button" class="btn btn-primary" value="New Player" />
+</a>
 {% endblock %}
