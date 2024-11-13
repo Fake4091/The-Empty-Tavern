@@ -1,8 +1,9 @@
 from django import forms
-from app.models import Player
+
+# from app.models import Player
 
 
-class PlayerForm(forms.ModelForm):
-    class Meta:
-        model = Player
-        exclude = ["user"]
+# class PlayerForm(forms.ModelForm):
+#    class Meta:
+#        model = Player
+#        exclude = ["user"]
