@@ -1,6 +1,8 @@
 {% extends "base.html" %} {% load bootstrap5 %} {% block content %}
 <h1>Home</h1>
-<a href="{% url 'new_player' %}">
-  <input type="button" class="btn btn-primary" value="New Player" />
+<!--{% if user.is_authenticated %}
+<a href="{% url '' %}">
+  <input type="button" class="btn btn-primary" value="Find a Group" />
 </a>
+{% endif %}-->
 {% endblock %}
