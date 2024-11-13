@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% load bootstrap5 %} {% block content %}
+<h1>{{username}}</h1>
+<h2>Groups</h2>
+{% for group in groups %} {% if username in group.members %}
+<p><b>{{group.group_name}}</b></p>
+<form action="{% url 'logout' %}" method="post">
+  {% csrf_token %}
+  <a href="{% url 'password_change' %}"
+    ><input class="btn btn-primary" type="button" value="Change Password"
+  /></a>
+  <button class="btn btn-danger" type="submit">Log Out</button>
+</form>
+
+{% endif %} {% endfor %} {% endblock %}

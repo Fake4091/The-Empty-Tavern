@@ -1,6 +1,20 @@
 from django import forms
+from django.contrib.auth.models import User
+from app.models import Groups
 
 # from app.models import Player
+
+
+class GroupForm(forms.Form):
+    users = []
+    for i in User.objects.all():
+        users.append((i, i.username))
+
+    print(users)
+
+    group_name = forms.CharField(max_length=100)
+    members = forms.MultipleChoiceField(choices=users)
+    game_version = forms.ChoiceField(choices=Groups.GAME_VERSIONS)
 
 
 # class PlayerForm(forms.ModelForm):
