@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% load bootstrap5 %} {% block content %}
-<h2>Sign up</h2>
+<h2 class="top text-center">Sign up</h2>
 <form method="post">
   {% csrf_token %} {% bootstrap_form form %}
   <button class="btn btn-primary" type="submit">Sign Up</button>

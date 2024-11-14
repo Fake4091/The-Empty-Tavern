@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from app.models import Groups
-from app.forms import GroupForm
+from app.forms import GroupForm, ViewGroupsForm
 
 # from app.forms import PlayerForm
 
@@ -8,7 +8,14 @@ from app.forms import GroupForm
 
 
 def home(request):
-    return render(request, "home.html", {"page": "Home"})
+    form = ViewGroupsForm(request.GET)
+    if form.is_valid():
+        groups = Groups.objects.filter(game_version=form.cleaned_data["game_version"])
+        return render(
+            request, "home.html", {"page": "Home", "groups": groups, "form": form}
+        )
+    else:
+        return render(request, "home.html", {"page": "Home", "form": form})
 
 
 def account_view(request, username):
@@ -23,8 +30,10 @@ def new_group(request):
     form = GroupForm(request.POST or None)
     if form.is_valid():
         group = Groups(
+            group_description=form.cleaned_data["group_description"],
+            group_pic=form.cleaned_data["group_pic"],
             group_name=form.cleaned_data["group_name"],
-            members=form.cleaned_data["members"],
+            members=[request.user],
             game_version=form.cleaned_data["game_version"],
         )
         group.save()

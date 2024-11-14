@@ -1,3 +1,4 @@
+from typing import Optional
 from django import forms
 from django.contrib.auth.models import User
 from app.models import Groups
@@ -10,10 +11,13 @@ class GroupForm(forms.Form):
     for i in User.objects.all():
         users.append((i, i.username))
 
-    print(users)
-
+    group_description = forms.CharField()
+    group_pic = forms.ImageField()
     group_name = forms.CharField(max_length=100)
-    members = forms.MultipleChoiceField(choices=users)
+    game_version = forms.ChoiceField(choices=Groups.GAME_VERSIONS)
+
+
+class ViewGroupsForm(forms.Form):
     game_version = forms.ChoiceField(choices=Groups.GAME_VERSIONS)
 
 

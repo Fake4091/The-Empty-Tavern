@@ -1,9 +1,104 @@
-.right {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+body {
+  background-color: #24273a;
+  color: #cad3f5;
+}
+
+.btn {
+  border-radius: 0;
+  border: none;
+  color: #cad3f5;
+  background-color: #363a4f;
+}
+
+.btn:hover {
+  background-color: #5b6078;
+}
+
+.btn:focus {
+  background-color: #5b6078;
+}
+
+.btn:active {
+  background-color: #b7bdf8;
+}
+
+.nav {
+  background-color: #363a4f !important;
+  position: fixed;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  height: 7vh;
+}
+
+.nav-link {
+  text-decoration: none;
+}
+
+.nav-container {
+  position: absolute;
+  top: 0;
+  color: #cad3f5;
+  height: 7vh;
+  width: max-content;
+  background-color: #363a4f;
+  margin: 0 3vw;
+}
+
+.nav-container:hover {
+  color: #cad3f5;
+  background-color: #5b6078;
+}
+
+.nav-container:active {
+  color: #1e2030;
+  background-color: #b7bdf8;
+}
+
+.nav-txt {
+  position: relative;
+  top: 1.5vh;
+  font-size: 12pt;
   padding: 0 1vw;
 }
-.username {
-  padding: 1vh 1vw 0 0;
+
+.account {
+  right: 3vw;
+}
+
+.home {
+  left: 3vw;
+}
+
+.account-buttons {
+  position: absolute;
+  right: 3vw;
+  top: 1vh;
+}
+
+.top {
+  margin-top: 7vh;
+}
+
+.group-filter {
+  display: flex;
+  width: 90vw;
+}
+
+.group-filter .form-select {
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 0;
+  background-color: #363a4f;
+  color: #cad3f5;
+}
+
+.form-select {
+  background-image: url(./arrow.svg);
+}
+
+.go-btn {
+  align-self: flex-end;
+  margin-bottom: 1rem;
+  height: max-content;
+  margin-left: 1vw;
 }

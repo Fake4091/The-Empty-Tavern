@@ -12,7 +12,9 @@ class Groups(models.Model):
         ("Other", "Other"),
     )
 
+    group_pic = models.ImageField()
     group_name = models.CharField(max_length=100)
+    group_description = models.TextField()
     members = models.JSONField()
     game_version = models.CharField(
         max_length=100,

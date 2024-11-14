@@ -5,21 +5,28 @@
     <title>The Empty Tavern - {{page}}</title>
     {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% block imports %}{% endblock %}
   </head>
   <body>
     <div class="container">
       <ul class="nav bg-info">
         <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">
+            <div class="nav-container home">
+              <p class="nav-txt">Home</p>
+            </div>
+          </a>
           {% if user.is_authenticated %}
-          <div class="right">
-            <a class="username" href="{% url 'account' user.username %}">Account</a>
-          </div>
+            <a class="nav-link" href="{% url 'account' user.username %}">
+              <div class="nav-container account">
+                <p class="nav-txt">Account</p>
+              </div>
+            </a>
           {% else %}
-          <div class="right">
-            <p class="username">You are not logged in</p>
-            <a href="{% url 'signup' %}"><input type="button" class="btn btn-primary" value="Sign Up"/></a>
-            <a href="{% url 'login' %}"><input type="button" class="btn btn-primary" value="Log In"/></a>
-          </div>
+            <div class="account-buttons">
+              <a href="{% url 'signup' %}"><input type="button" class="btn btn-primary" value="Sign Up"/></a>
+              <a href="{% url 'login' %}"><input type="button" class="btn btn-primary" value="Log In"/></a>
+            </div>
           {% endif %}
         </li>
       </ul>
