@@ -1,15 +1,35 @@
-{% extends "base.html" %} {% load bootstrap5 %} {% block content %}
+{% extends "base.html" %} {% load bootstrap5 %} 
+{% block title %}{{username}}{% endblock %}
+{% block content %}
 <h1 class="top text-center">{{username}}</h1>
+{% if username == user.username %}
+<form action="{% url 'new_group' %}" method="post">
+  {% csrf_token %}
+  <button class="btn btn-primary float-end" type="submit">Create A New Group</button>
+</form>
+{% endif %}
 <h2>Groups</h2>
-{% for group in groups %} {% if username in group.members %}
-<p><b>{{group.group_name}}</b></p>
-{% endif %} {% endfor %}
+{% if user.is_authenticated %}
+{% for i in groups %}
+{% if username in i.members %}
+<div class="card">
+  <img src="http://{{site}}/{{ i.group_pic.url }}" alt="Hopefully an image of the group members"/>
+  <h3>{{i.group_name}}</h3>
+  <p>{{i.group_description}}</p>
+  <p>Members: <i>{% for x in i.members %}<a href="/accounts/{{x}}">{{x}},</a>{% endfor %}</i></p>
+</div>
+{% endif %}{% endfor %}
+{% else %}
+<p>Please log in to see this user's groups.</p>
+{% endif %}
+{% if username == user.username %}
 <form action="{% url 'logout' %}" method="post">
   {% csrf_token %}
   <a href="{% url 'password_change' %}"
     ><input class="btn btn-primary" type="button" value="Change Password"
   /></a>
-  <button class="btn btn-danger" type="submit">Log Out</button>
+  <button class="btn btn-primary" type="submit">Log Out</button>
+  <a href="{% url 'delete_account' %}"><input class="float-end btn btn-danger" type="button" value="Delete Account"/></a>
 </form>
-
+{% endif %}
 {% endblock %}

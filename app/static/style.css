@@ -29,6 +29,7 @@ body {
   left: 0;
   top: 0;
   height: 7vh;
+  z-index: 1000;
 }
 
 .nav-link {
@@ -81,6 +82,7 @@ body {
 }
 
 .group-filter {
+  padding: 1vh 1vw;
   display: flex;
   width: 90vw;
 }
@@ -100,5 +102,35 @@ body {
   align-self: flex-end;
   margin-bottom: 1rem;
   height: max-content;
-  margin-left: 1vw;
+}
+
+.form-control {
+  background-color: #363a4f;
+  border: none;
+  border-radius: 0;
+  color: #cad3f5;
+}
+
+.form-control:focus {
+  background-color: #363a4f;
+  color: #cad3f5;
+}
+
+::placeholder {
+  color: #5b6078 !important;
+}
+
+.text-muted {
+  color: #5b6078 !important;
+}
+
+.card {
+  width: 30vw;
+  background-color: #363a4f;
+  color: #cad3f5;
+  padding: 1vh 1vw;
+  margin: 1vh 1vw;
+}
+
+.btn-danger {
 }

@@ -16,14 +16,16 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 from django.urls import path, include
-from app.views import home, account_view  # new_player
+from app.views import home, account_view, new_group  # new_player
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", home, name="home"),
+    path("new_group/", new_group, name="new_group"),
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     path("accounts/<str:username>/", account_view, name="account"),
-    #     path("new_player", new_player, name="new_player"),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

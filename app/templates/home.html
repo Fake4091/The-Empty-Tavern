@@ -1,18 +1,23 @@
 {% extends "base.html" %} {% load bootstrap5 %} {% load static %}
+{% block title %}Home{% endblock %}
 {% block imports %}<script src="{% static 'home.js' %}" defer></script> {% endblock %}
 {% block content %}
 <h1 class="top text-center">Home</h1>
+{% if user.is_authenticated %}
 <div class="group-filter">
-  {% bootstrap_form form %} <button type="submit" class="btn btn-primary go-btn" id="go-btn">Go!</button>
+  <form>
+    {% bootstrap_form form %} <button type="submit" class="btn btn-primary go-btn" id="go-btn">Go!</button>
+  </form>
 </div>
-{% if groups %}
 {% for i in groups %}
 <div class="card">
-  <img src="{{i.image.url}}" class="card-img-top" alt="Picture of the group">
+  <img src="http://{{site}}/{{ i.group_pic.url }}" alt="Hopefully an image of the group members"/>
   <h3>{{i.group_name}}</h3>
   <p>{{i.group_description}}</p>
-  <p>Members: <i>{% for x in i.members %}<a href="/accounts/{{x.username}}">{{x.username}},</a>{% endfor %}</i></p>
+  <p>Members: <i>{% for x in i.members %}<a href="/accounts/{{x}}">{{x}},</a>{% endfor %}</i></p>
 </div>
 {% endfor %}
+{% else %}
+<p>Please login to view groups.</p>
 {% endif %}
 {% endblock %}

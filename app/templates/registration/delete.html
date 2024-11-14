@@ -1,0 +1,9 @@
+{% extends "base.html" %} {% load bootstrap5 %} 
+{% block title %}Delete Account{% endblock %}
+{% block content %}
+<h2 class="top text-center">Delete Account</h2>
+<form method="post">
+  {% csrf_token %} {% bootstrap_form form %}
+  <button class="btn btn-danger" type="submit">Delete Account</button>
+</form>
+{% endblock %}

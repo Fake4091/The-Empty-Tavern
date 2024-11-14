@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% load bootstrap5 %} {% block content %}
+{% extends "base.html" %} {% load bootstrap5 %}
+{% block title %}New Group{% endblock %}
+{% block content %}
 <h1 class="top text-center">Add A Group</h1>
 <form method="post">
   {% csrf_token %} {% bootstrap_form form %}

@@ -12,23 +12,36 @@ def home(request):
     if form.is_valid():
         groups = Groups.objects.filter(game_version=form.cleaned_data["game_version"])
         return render(
-            request, "home.html", {"page": "Home", "groups": groups, "form": form}
+            request,
+            "home.html",
+            {
+                "page": "Home",
+                "groups": groups,
+                "form": form,
+                "site": request.get_host(),
+            },
         )
     else:
-        return render(request, "home.html", {"page": "Home", "form": form})
+        return render(request, "home.html", {"form": form})
 
 
 def account_view(request, username):
     return render(
         request,
         "account.html",
-        {"page": "Account", "username": username, "groups": Groups.objects.all()},
+        {
+            "page": "Account",
+            "username": username,
+            "groups": Groups.objects.all(),
+            "site": request.get_host(),
+        },
     )
 
 
 def new_group(request):
     form = GroupForm(request.POST or None)
     if form.is_valid():
+        groups = Groups.objects.filter(game_version="D&D")
         group = Groups(
             group_description=form.cleaned_data["group_description"],
             group_pic=form.cleaned_data["group_pic"],
@@ -40,10 +53,15 @@ def new_group(request):
         return render(
             request,
             "home.html",
-            {"page": "Home", "members": form.cleaned_data["members"]},
+            {
+                "page": "Home",
+                "groups": groups,
+                "form": form,
+                "site": request.get_host(),
+            },
         )
     else:
-        return render(request, "new_group.html", {"page": "New Group", "form": form})
+        return render(request, "add_group.html", {"form": form})
 
 
 # def new_player(request):
@@ -52,4 +70,4 @@ def new_group(request):
 # form.save()
 # return render(request, "home.html", {"page": "Home"})
 # else:
-# return render(request, "new_player.html", {"page": "New Player", "form": form})
+# return render(request, "new_player.html", {"form": form})
