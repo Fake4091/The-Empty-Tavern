@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -20,3 +20,12 @@ class Groups(models.Model):
         max_length=100,
         choices=GAME_VERSIONS,
     )
+
+
+class Notifications(models.Model):
+    users = []
+    for i in User.objects.all():
+        users.append((i.username, i.username))
+
+    user = models.CharField(choices=users, max_length=150)
+    notification = models.JSONField()

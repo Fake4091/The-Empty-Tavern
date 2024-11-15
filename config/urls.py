@@ -26,11 +26,13 @@ from app.views import (
     edit_group,
     delete_group,
     groups_account_view,
+    notifications,
 )
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", home, name="home"),
+    path("notifications", notifications, name="notifications"),
     path("groups/<int:id>", groups_account_view, name="groups"),
     path("groups/new", new_group, name="new_group"),
     path("groups/edit/<int:id>", edit_group, name="edit_group"),

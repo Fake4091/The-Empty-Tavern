@@ -103,3 +103,7 @@ def groups_account_view(request, id):
     return render(
         request, "group_account.html", {"group": group, "site": request.get_host()}
     )
+
+
+def notifications(request):
+    return render(request, "notifications.html")
