@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from app.models import Groups
-from app.forms import GroupForm, ViewGroupsForm
+from app.forms import GroupForm, ViewGroupsForm, DeleteGroupsForm, EditGroupForm
 
 # from app.forms import PlayerForm
 
@@ -39,35 +39,67 @@ def account_view(request, username):
 
 
 def new_group(request):
-    form = GroupForm(request.POST or None)
-    if form.is_valid():
-        groups = Groups.objects.filter(game_version="D&D")
-        group = Groups(
-            group_description=form.cleaned_data["group_description"],
-            group_pic=form.cleaned_data["group_pic"],
-            group_name=form.cleaned_data["group_name"],
-            members=[request.user],
-            game_version=form.cleaned_data["game_version"],
-        )
-        group.save()
-        return render(
-            request,
-            "home.html",
-            {
-                "page": "Home",
-                "groups": groups,
-                "form": form,
-                "site": request.get_host(),
-            },
-        )
+    if request.method == "POST":
+        form = GroupForm(request.POST, request.FILES)
+        if form.is_valid():
+            group = Groups(
+                group_description=form.cleaned_data["group_description"],
+                group_pic=form.cleaned_data["group_pic"],
+                group_name=form.cleaned_data["group_name"],
+                members=[request.user.username],
+                game_version=form.cleaned_data["game_version"],
+            )
+            group.save()
+            return redirect("home")
     else:
-        return render(request, "add_group.html", {"form": form})
+        form = GroupForm()
+    return render(request, "add_group.html", {"form": form})
 
 
-# def new_player(request):
-# form = PlayerForm(request.POST or None)
-# if form.is_valid():
-# form.save()
-# return render(request, "home.html", {"page": "Home"})
-# else:
-# return render(request, "new_player.html", {"form": form})
+def edit_group(request, id):
+    form = EditGroupForm(request.POST or None)
+    if form.is_valid():
+        group = Groups.objects.get(id=id)
+        if group.members[0] == request.user.username:
+            for i in form.cleaned_data["members"]:
+                if i not in group.members:
+                    group.members.append(i)
+            if form.cleaned_data["group_description"]:
+                group.group_description = form.cleaned_data["group_description"]
+            if form.cleaned_data["group_pic"]:
+                group.group_pic = form.cleaned_data["group_pic"]
+            if form.cleaned_data["group_name"]:
+                group.group_name = form.cleaned_data["group_name"]
+            if form.cleaned_data["game_version"]:
+                group.game_version = form.cleaned_data["game_version"]
+            group.save()
+            return redirect("home")
+        else:
+            return redirect("home")
+    else:
+        return render(request, "edit_group.html", {"form": form})
+
+
+def delete_group(request, id):
+    form = DeleteGroupsForm(request.POST or None)
+    if form.is_valid():
+        group = Groups.objects.get(id=id)
+        if (
+            form.cleaned_data["confirmation"].lower() == "i understand."
+            and group.members[0] == request.user.username
+        ):
+            group.delete()
+            return redirect("home")
+        elif form.cleaned_data["confirmation"].lower() != "i understand.":
+            return redirect("home")
+        else:
+            return redirect("home")
+    else:
+        return render(request, "delete_group.html", {"form": form})
+
+
+def groups_account_view(request, id):
+    group = Groups.objects.get(id=id)
+    return render(
+        request, "group_account.html", {"group": group, "site": request.get_host()}
+    )

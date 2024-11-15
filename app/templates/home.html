@@ -12,9 +12,17 @@
 {% for i in groups %}
 <div class="card">
   <img src="http://{{site}}/{{ i.group_pic.url }}" alt="Hopefully an image of the group members"/>
-  <h3>{{i.group_name}}</h3>
+  <h3><a href="{% url 'groups' i.id %}">{{i.group_name}}</a></h3>
   <p>{{i.group_description}}</p>
+  {% if i.members|length < 5 %}
   <p>Members: <i>{% for x in i.members %}<a href="/accounts/{{x}}">{{x}},</a>{% endfor %}</i></p>
+  {% else %}
+  <p>Members: <a href="{% url 'groups' i.id %}">{{i.members|length}}</a></p>
+  {% endif %}
+  {% if user.username == i.members.0 %}
+  <a href="{% url 'edit_group' i.id %}"><button class="btn btn-primary btn-card">Edit</button></a>
+  <a href="{% url 'delete_group' i.id %}"><button class="btn btn-danger">Delete</button></a>
+  {% endif %}
 </div>
 {% endfor %}
 {% else %}

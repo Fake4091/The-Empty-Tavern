@@ -87,14 +87,11 @@ body {
   width: 90vw;
 }
 
-.group-filter .form-select {
+.form-select {
   border-color: rgba(0, 0, 0, 0);
   border-radius: 0;
   background-color: #363a4f;
   color: #cad3f5;
-}
-
-.form-select {
   background-image: url(./arrow.svg);
 }
 
@@ -132,5 +129,26 @@ body {
   margin: 1vh 1vw;
 }
 
+.btn-card {
+  background-color: #494d64;
+}
+
 .btn-danger {
+  background-color: #ed8796;
+}
+
+a {
+  color: #8aadf4;
+}
+
+a:hover {
+  color: #8aadf4;
+}
+
+a:visited {
+  color: #c6a0f6;
+}
+
+.group-acct-end {
+  margin-bottom: 3rem;
 }

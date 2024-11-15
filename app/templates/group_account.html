@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% load bootstrap5 %} {% block title%}
+{{group.group_name}}{% endblock %} {% block content %}
+<h1 class="top text-center">{{group.group_name}}</h1>
+<img
+  src="http://{{site}}/{{ group.group_pic.url }}"
+  alt="Hopefully an image of the group members"
+/>
+<h3>{{group.group_description}}</h3>
+<p {% if user.username != i.members.0 %}class="group-acct-end"{% endif %} >
+  Members:
+  <i>
+    {% for x in group.members %}<a href="/accounts/{{x}}">{{x}},</a>{% endfor%}
+  </i>
+</p>
+{% if user.username == i.members.0 %}
+<a class="group-acct-end" href="{% url 'edit_group' i.id %}"
+  ><button class="btn btn-primary btn-card">Edit</button></a
+>
+<a href="{% url 'delete_group' i.id %}"
+  ><button class="btn btn-danger">Delete</button></a
+>
+{% endif %} {% endblock %}

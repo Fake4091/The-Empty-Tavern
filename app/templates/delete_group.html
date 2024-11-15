@@ -1,0 +1,9 @@
+{% extends "base.html" %} {% load bootstrap5 %} {% block title %}Delete
+Group{% endblock %} {% block content %}
+<h2 class="top text-center">Delete Group</h2>
+<p><b>By entering "I understand." in the box below, you are agreeing to delete the group and all associated data other than users and images. The remaining images will remain on The Empty Tavern, but will not be linked to, so if you'd like to keep them, you'll need to keep track of the link yourself.</b></p>
+<form method="POST">
+  {% csrf_token %} {% bootstrap_form form %}
+  <button class="btn btn-danger" type="submit">Delete Group</button>
+</form>
+{% endblock %}

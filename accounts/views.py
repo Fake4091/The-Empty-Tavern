@@ -6,7 +6,6 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib.auth import authenticate
 from accounts.forms import DeleteAccountForm
-from django.contrib import messages
 from app.views import home
 
 
@@ -19,18 +18,15 @@ class SignUpView(CreateView):
 def delete_account(request):
     form = DeleteAccountForm(request.POST or None)
     if form.is_valid():
-        print(
-            authenticate(
-                request,
-                username=form.cleaned_data["username"],
-                password=form.cleaned_data["password"],
-            )
+        user = authenticate(
+            request,
+            username=form.cleaned_data["username"],
+            password=form.cleaned_data["password"],
         )
-        # if user != None:
-        #     print(type(user))
-        #     return redirect(home)
-        # else:
-        #     messages.info(request, "Incorrect Username or Password")
-        #     return redirect(home)
+        if user is not None:
+            user.delete()
+            return redirect(home)
+        else:
+            return redirect(home)
     else:
         return render(request, "registration/delete.html", {"form": form})
