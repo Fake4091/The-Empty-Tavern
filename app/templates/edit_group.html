@@ -2,6 +2,7 @@
 {% block title %}Edit Group{% endblock %} {% block content %}
 <h1 class="top text-center">Edit Your Group</h1>
 <form enctype='multipart/form-data' method="post">
+  <p>If you are trying to remove a group member, please do so from the group account page.</p>
   {% csrf_token %} {% bootstrap_form form %}
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

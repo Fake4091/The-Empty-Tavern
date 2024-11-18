@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% load bootstrap5 %} {% load static %}
+{% block title %}Feed{% endblock %}
+{% block imports %}<script src="{% static 'home.js' %}" defer></script> {% endblock %}
+{% block content %}
+<h1 class="top text-center">Feed</h1>
+{% if user.is_authenticated %}
+<div class="group-filter">
+  <form>
+    {% bootstrap_form form %} <button type="submit" class="btn btn-primary go-btn" id="go-btn">Go!</button>
+  </form>
+</div>
+{% for i in groups %}
+<div class="card">
+  <img src="http://{{site}}/{{ i.group_pic.url }}" alt="Hopefully an image of the group members"/>
+  <h3>{{i.group_name}}</h3>
+  <p>{{i.group_description}}</p>
+  {% if i.members|length < 5 %}
+  <p>Members: <i>{% for x in i.members %}<a href="/accounts/{{x}}">{{x}},</a>{% endfor %}</i></p>
+  {% else %}
+  <p>Members: <a href="{% url 'groups' i.id %}">{{i.members|length}}</a></p>
+  {% endif %}
+  <a href="{% url 'groups' i.id %}"><button class="btn btn-primary btn-card">Go to Group Account</button></a>
+  {% if user.username == i.members.0 %}
+  <a href="{% url 'edit_group' i.id %}"><button class="btn btn-primary btn-card">Edit</button></a>
+  <a href="{% url 'delete_group' i.id %}"><button class="btn btn-danger">Delete</button></a>
+  {% elif user.username not in i.members %}
+  <a href="{% url 'join_group' i.id %}"><button class="btn btn-primary btn-card">Request to Join</button></a>
+  {% endif %}
+</div>
+{% endfor %}
+{% else %}
+<p>Please login to view groups.</p>
+{% endif %}
+{% endblock %}

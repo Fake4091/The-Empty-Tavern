@@ -28,4 +28,4 @@ class Notifications(models.Model):
         users.append((i.username, i.username))
 
     user = models.CharField(choices=users, max_length=150)
-    notification = models.JSONField()
+    notification = models.JSONField(default=list)

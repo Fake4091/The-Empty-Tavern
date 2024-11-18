@@ -1,0 +1,8 @@
+{% extends "base.html" %} {% load bootstrap5 %} {% block title %}{% if user.id == user_id %}Leave{% else %}Remove From{% endif %} Group{% endblock %} {% block content %}
+<h2 class="top text-center">{% if user.username == username %}Leave{% else %}Remove From{% endif %} Group</h2>
+<p><b>Are you sure you would like to {% if user.username == username %}leave{% else %}remove this user from{% endif %} this group?</b></p>
+<form method="POST">
+  {% csrf_token %} {% bootstrap_form form %}
+  <button class="btn btn-danger" type="submit">{% if user.username == username %}Leave{% else %}Remove From{% endif %} Group</button>
+</form>
+{% endblock %}

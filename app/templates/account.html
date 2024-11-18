@@ -21,6 +21,7 @@
   {% else %}
   <p>Members: {{i.members|length}}</p>
   {% endif %}
+  <a href="{% url 'groups' i.id %}"><button class="btn btn-primary btn-card">Go to Group Account</button></a>
   {% if user.username == i.members.0 %}
   <a href="{% url 'edit_group' i.id %}"><button class="btn btn-primary btn-card">Edit</button></a>
   <a href="{% url 'delete_group' i.id %}"><button class="btn btn-danger">Delete</button></a>

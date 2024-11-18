@@ -17,11 +17,6 @@ class ViewGroupsForm(forms.Form):
 
 
 class EditGroupForm(forms.Form):
-    users = []
-    for i in User.objects.all():
-        users.append((i.username, i.username))
-
-    members = forms.MultipleChoiceField(choices=users, required=False)
     group_description = forms.CharField(required=False)
     group_pic = forms.ImageField(required=False)
     group_name = forms.CharField(max_length=100, required=False)
@@ -32,7 +27,13 @@ class DeleteGroupsForm(forms.Form):
     confirmation = forms.CharField()
 
 
-# class PlayerForm(forms.ModelForm):
-#    class Meta:
-#        model = Player
-#        exclude = ["user"]
+class JoinGroupForm(forms.Form):
+    confirm = forms.BooleanField()
+
+
+class AcceptJoinForm(forms.Form):
+    confirm = forms.BooleanField()
+
+
+class RemoveForm(forms.Form):
+    confirm = forms.BooleanField()

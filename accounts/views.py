@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -6,11 +7,16 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib.auth import authenticate
 from accounts.forms import DeleteAccountForm
+from app.models import Notifications
 from app.views import home
 
 
 class SignUpView(CreateView):
-    form_class = UserCreationForm
+    form_class = UserCreationForm()
+    if form_class.is_valid():
+        n = Notifications(
+            user=User.objects.get(username=form_class.cleaned_data["username"]).id
+        )
     success_url = reverse_lazy("login")
     template_name = "registration/signup.html"
 

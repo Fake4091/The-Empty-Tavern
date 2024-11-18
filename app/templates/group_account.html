@@ -7,9 +7,17 @@
 />
 <h3>{{group.group_description}}</h3>
 <p {% if user.username != i.members.0 %}class="group-acct-end"{% endif %} >
-  Members:
+  Members: <br />
   <i>
-    {% for x in group.members %}<a href="/accounts/{{x}}">{{x}},</a>{% endfor%}
+    {% for x in group.members %}
+      <a href="/accounts/{{x}}">{{x}}</a>
+      {% if user.username == x %}
+      <a href="{% url 'remove' group.id user.username %}"><button class="btn btn-danger">Leave</button></a>,
+      {% elif user.username == group.members.0 %}
+      <a href="{% url 'remove' group.id x %}"><button class="btn btn-danger">Remove</button></a>,
+      {% endif %}
+      <br />
+    {% endfor%}
   </i>
 </p>
 {% if user.username == i.members.0 %}

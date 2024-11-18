@@ -1,6 +1,15 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from app.models import Groups
-from app.forms import GroupForm, ViewGroupsForm, DeleteGroupsForm, EditGroupForm
+from app.models import Groups, Notifications
+from app.forms import (
+    GroupForm,
+    JoinGroupForm,
+    RemoveForm,
+    ViewGroupsForm,
+    DeleteGroupsForm,
+    EditGroupForm,
+    AcceptJoinForm,
+)
 
 # from app.forms import PlayerForm
 
@@ -13,7 +22,7 @@ def home(request):
         groups = Groups.objects.filter(game_version=form.cleaned_data["game_version"])
         return render(
             request,
-            "home.html",
+            "feed.html",
             {
                 "page": "Home",
                 "groups": groups,
@@ -22,7 +31,7 @@ def home(request):
             },
         )
     else:
-        return render(request, "home.html", {"form": form})
+        return render(request, "feed.html", {"form": form})
 
 
 def account_view(request, username):
@@ -61,9 +70,6 @@ def edit_group(request, id):
     if form.is_valid():
         group = Groups.objects.get(id=id)
         if group.members[0] == request.user.username:
-            for i in form.cleaned_data["members"]:
-                if i not in group.members:
-                    group.members.append(i)
             if form.cleaned_data["group_description"]:
                 group.group_description = form.cleaned_data["group_description"]
             if form.cleaned_data["group_pic"]:
@@ -101,9 +107,94 @@ def delete_group(request, id):
 def groups_account_view(request, id):
     group = Groups.objects.get(id=id)
     return render(
-        request, "group_account.html", {"group": group, "site": request.get_host()}
+        request,
+        "group_account.html",
+        {"group": group, "site": request.get_host()},
     )
 
 
 def notifications(request):
-    return render(request, "notifications.html")
+    notis = Notifications.objects.get(user=request.user.username).notification[1:]
+    return render(
+        request,
+        "notifications.html",
+        {"notifications": notis},
+    )
+
+
+def join_group(request, id):
+    form = JoinGroupForm(request.POST or None)
+    if form.is_valid():
+        if form.cleaned_data["confirm"]:
+            group = Groups.objects.get(id=id)
+            if request.user.username not in group.members:
+                for i in group.members:
+                    member = Notifications.objects.get(user=i)
+                    member.notification.append(
+                        [
+                            User.objects.get(username=i).id,
+                            group.id,
+                            group.members,
+                            f"{request.user.username} would like to join {group.group_name}.",
+                            request.user.id,
+                        ]
+                    )
+                    member.save()
+        return redirect("home")
+    else:
+        return render(request, "join_group.html", {"form": form})
+
+
+def accept(request, group_id, user_id):
+    form = AcceptJoinForm(request.POST or None)
+    if form.is_valid():
+        if form.cleaned_data["confirm"]:
+            group = Groups.objects.get(id=group_id)
+            if request.user.username == group.members[0]:
+                if User.objects.get(id=user_id).username not in group.members:
+                    group.members.append(User.objects.get(id=user_id).username)
+                notif = Notifications.objects.get(user=request.user.username)
+                for i in notif.notification:
+                    if i:
+                        if i[4] == user_id and i[1] == group_id:
+                            notif.notification.remove(i)
+                group.save()
+                notif.save()
+        return redirect("home")
+    else:
+        return render(request, "accept.html", {"form": form})
+
+
+def remove(request, group_id, username):
+    form = RemoveForm(request.POST or None)
+    if form.is_valid():
+        if form.cleaned_data["confirm"]:
+            group = Groups.objects.get(id=group_id)
+            if (
+                request.user.username == group.members[0]
+                or request.user.username == username
+            ):
+                if username in group.members:
+                    group.members.remove(username)
+            group.save()
+        return redirect("home")
+    else:
+        return render(request, "remove.html", {"form": form, "username": username})
+
+
+def reject(request, group_id, user_id):
+    group = Groups.objects.get(id=group_id)
+    if request.user.username == group.members[0]:
+        notif = Notifications.objects.get(user=request.user.username)
+        for i in notif.notification:
+            if i:
+                if i[4] == user_id and i[1] == group_id:
+                    notif.notification.remove(i)
+        notif.save()
+    return redirect("home")
+
+
+def real_home(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+    return render(request, "home.html")

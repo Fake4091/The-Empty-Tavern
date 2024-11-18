@@ -11,9 +11,14 @@
     <div class="container">
       <ul class="nav bg-info">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'home' %}">
+          <a class="nav-link" href="{% url 'real_home' %}">
             <div class="nav-container home">
               <p class="nav-txt">Home</p>
+            </div>
+          </a>
+          <a class="nav-link" href="{% url 'home' %}">
+            <div class="nav-container feed">
+              <p class="nav-txt">feed</p>
             </div>
           </a>
           {% if user.is_authenticated %}
@@ -29,8 +34,8 @@
             </a>
           {% else %}
             <div class="account-buttons">
-              <a href="{% url 'signup' %}"><input type="button" class="btn btn-primary" value="Sign Up"/></a>
-              <a href="{% url 'login' %}"><input type="button" class="btn btn-primary" value="Log In"/></a>
+              <a href="{% url 'signup' %}"><input type="button" class="btn btn-primary login-btns" value="Sign Up"/></a>
+              <a href="{% url 'login' %}"><input type="button" class="btn btn-primary login-btns" value="Log In"/></a>
             </div>
           {% endif %}
         </li>

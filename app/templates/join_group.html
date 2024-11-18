@@ -1,0 +1,8 @@
+{% extends "base.html" %} {% load bootstrap5 %} {% block title %}Join Group{% endblock %} {% block content %}
+<h2 class="top text-center">Join Group</h2>
+<p><b>Are you sure you would like to join this group and send a notification to every member in this group?</b></p>
+<form method="POST">
+  {% csrf_token %} {% bootstrap_form form %}
+  <button class="btn btn-primary btn-card" type="submit">Join Group</button>
+</form>
+{% endblock %}

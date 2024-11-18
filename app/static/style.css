@@ -1,6 +1,7 @@
 body {
   background-color: #24273a;
   color: #cad3f5;
+  overflow-x: hidden;
 }
 
 .btn {
@@ -71,6 +72,10 @@ body {
   left: 3vw;
 }
 
+.feed {
+  left: 8.2vw;
+}
+
 .account-buttons {
   position: absolute;
   right: 3vw;
@@ -133,6 +138,10 @@ body {
   background-color: #494d64;
 }
 
+.btn {
+  margin: 0.3em 0;
+}
+
 .btn-danger {
   background-color: #ed8796;
 }
@@ -163,4 +172,45 @@ a:visited {
   justify-content: center;
   align-items: center;
   right: 10vw;
+}
+
+.form-check-input {
+  border-radius: 0 !important;
+  background-color: #363a4f;
+  border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.form-check-input:checked {
+  background-color: #b7bdf8 !important;
+  border-color: rgba(0, 0, 0, 0) !important;
+}
+
+.login-btns {
+  margin: 0;
+}
+
+.header {
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 7vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 93vh;
+  flex-direction: column;
+  background-image: url(./header.jpg);
+  background-size: cover;
+}
+
+.note {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 8pt;
+}
+
+.details {
+  margin-top: 101vh;
 }
