@@ -4,8 +4,10 @@ Notifications{% endblock %} {% block content %}
 {% for i in notifications %}
 <div class="card">
   <p>{{i.3}}</p>
+  {% if user.username == i.2.0 %}
   <a href="{% url 'accept' i.1 i.4 %}"><button class="btn btn-primary btn-card">Accept</button></a>
   <a href="{% url 'reject' i.1 i.4 %}"><button class="btn btn-danger">Reject</button></a>
+  {% endif %}
 </div>
 {% endfor %}
 {% if notifications|length == 0 %}

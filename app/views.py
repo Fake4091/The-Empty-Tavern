@@ -120,12 +120,11 @@ def groups_account_view(request, id):
 
 def notifications(request):
     try:
-        notis = Notifications.objects.get(user=request.user.username).notification[1:]
-        print(len(notis))
+        notis = Notifications.objects.get(user=request.user.username).notification
     except Notifications.DoesNotExist:
         notis = Notifications(user=request.user.username)
         notis.save()
-        notis = Notifications.objects.get(user=request.user.username).notification[1:]
+        notis = Notifications.objects.get(user=request.user.username).notification
     return render(
         request,
         "notifications.html",
@@ -144,6 +143,7 @@ def join_group(request, id):
                         member = Notifications.objects.get(user=i)
                     except Notifications.DoesNotExist:
                         member = Notifications(user=i)
+                        member.save()
                     member.notification.append(
                         [
                             User.objects.get(username=i).id,
@@ -165,15 +165,15 @@ def accept(request, group_id, user_id):
         if form.cleaned_data["confirm"]:
             group = Groups.objects.get(id=group_id)
             if request.user.username == group.members[0]:
-                if User.objects.get(id=user_id).username not in group.members:
-                    group.members.append(User.objects.get(id=user_id).username)
-                notif = Notifications.objects.get(user=request.user.username)
-                for i in notif.notification:
-                    if i:
+                for x in group.members:
+                    notif = Notifications.objects.get(user=x)
+                    for i in notif.notification:
                         if i[4] == user_id and i[1] == group_id:
                             notif.notification.remove(i)
+                    notif.save()
+                if User.objects.get(id=user_id).username not in group.members:
+                    group.members.append(User.objects.get(id=user_id).username)
                 group.save()
-                notif.save()
         return redirect("notifications")
     else:
         return render(request, "accept.html", {"form": form})
@@ -199,12 +199,12 @@ def remove(request, group_id, username):
 def reject(request, group_id, user_id):
     group = Groups.objects.get(id=group_id)
     if request.user.username == group.members[0]:
-        notif = Notifications.objects.get(user=request.user.username)
-        for i in notif.notification:
-            if i:
+        for x in group.members:
+            notif = Notifications.objects.get(user=x)
+            for i in notif.notification:
                 if i[4] == user_id and i[1] == group_id:
                     notif.notification.remove(i)
-        notif.save()
+            notif.save()
     return redirect("home")
 
 
