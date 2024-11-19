@@ -121,6 +121,7 @@ def groups_account_view(request, id):
 def notifications(request):
     try:
         notis = Notifications.objects.get(user=request.user.username).notification[1:]
+        print(len(notis))
     except Notifications.DoesNotExist:
         notis = Notifications(user=request.user.username)
         notis.save()

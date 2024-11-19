@@ -243,3 +243,7 @@ a:visited {
   text-align: center;
   margin-bottom: 2em;
 }
+
+.notifications-empty {
+  text-align: center;
+}
