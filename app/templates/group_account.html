@@ -1,11 +1,13 @@
 {% extends "base.html" %} {% load bootstrap5 %} {% block title%}
 {{group.group_name}}{% endblock %} {% block content %}
 <h1 class="top text-center">{{group.group_name}}</h1>
+<div class="pic-container">
 <img
   class="group-pic"
   src="http://{{site}}/{{ group.group_pic.url }}"
   alt="Hopefully an image of the group members"
 />
+</div>
 <h3 class="group-desc">{{group.group_description}}</h3>
 <p {% if user.username != i.members.0 %}class="group-acct-end"{% endif %} >
   Members: <br />
