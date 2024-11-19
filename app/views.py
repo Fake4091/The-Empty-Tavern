@@ -20,6 +20,11 @@ def home(request):
     form = ViewGroupsForm(request.GET)
     if form.is_valid():
         groups = Groups.objects.filter(game_version=form.cleaned_data["game_version"])
+        groups = list(groups)
+        if form.cleaned_data["hide"]:
+            for i in groups:
+                if request.user.username in i.members:
+                    groups.remove(i)
         return render(
             request,
             "feed.html",
@@ -114,7 +119,12 @@ def groups_account_view(request, id):
 
 
 def notifications(request):
-    notis = Notifications.objects.get(user=request.user.username).notification[1:]
+    try:
+        notis = Notifications.objects.get(user=request.user.username).notification[1:]
+    except Notifications.DoesNotExist:
+        notis = Notifications(user=request.user.username)
+        notis.save()
+        notis = Notifications.objects.get(user=request.user.username).notification[1:]
     return render(
         request,
         "notifications.html",
@@ -129,7 +139,10 @@ def join_group(request, id):
             group = Groups.objects.get(id=id)
             if request.user.username not in group.members:
                 for i in group.members:
-                    member = Notifications.objects.get(user=i)
+                    try:
+                        member = Notifications.objects.get(user=i)
+                    except Notifications.DoesNotExist:
+                        member = Notifications(user=i)
                     member.notification.append(
                         [
                             User.objects.get(username=i).id,
@@ -160,7 +173,7 @@ def accept(request, group_id, user_id):
                             notif.notification.remove(i)
                 group.save()
                 notif.save()
-        return redirect("home")
+        return redirect("notifications")
     else:
         return render(request, "accept.html", {"form": form})
 

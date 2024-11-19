@@ -15,7 +15,7 @@
   <h3>{{i.group_name}}</h3>
   <p>{{i.group_description}}</p>
   {% if i.members|length < 5 %}
-  <p>Members: <i>{% for x in i.members %}<a href="/accounts/{{x}}">{{x}},</a>{% endfor %}</i></p>
+  <p>Members: <i>{% for x in i.members %}<a class="user-acct" href="/accounts/{{x}}">{{x}},</a>{% endfor %}</i></p>
   {% else %}
   <p>Members: <a href="{% url 'groups' i.id %}">{{i.members|length}}</a></p>
   {% endif %}

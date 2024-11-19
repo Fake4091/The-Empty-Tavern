@@ -2,15 +2,16 @@
 {{group.group_name}}{% endblock %} {% block content %}
 <h1 class="top text-center">{{group.group_name}}</h1>
 <img
+  class="group-pic"
   src="http://{{site}}/{{ group.group_pic.url }}"
   alt="Hopefully an image of the group members"
 />
-<h3>{{group.group_description}}</h3>
+<h3 class="group-desc">{{group.group_description}}</h3>
 <p {% if user.username != i.members.0 %}class="group-acct-end"{% endif %} >
   Members: <br />
   <i>
     {% for x in group.members %}
-      <a href="/accounts/{{x}}">{{x}}</a>
+      <a class="user-acct" href="/accounts/{{x}}">{{x}}</a>
       {% if user.username == x %}
       <a href="{% url 'remove' group.id user.username %}"><button class="btn btn-danger">Leave</button></a>,
       {% elif user.username == group.members.0 %}

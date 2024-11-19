@@ -5,7 +5,7 @@ Notifications{% endblock %} {% block content %}
 <div class="card">
   <p>{{i.3}}</p>
   <a href="{% url 'accept' i.1 i.4 %}"><button class="btn btn-primary btn-card">Accept</button></a>
-  <a href="{% url 'reject' i.1 i.4 %}"><button class="btn btn-delete">Reject</button></a>
+  <a href="{% url 'reject' i.1 i.4 %}"><button class="btn btn-danger">Reject</button></a>
 </div>
 {% endfor %}
 {% endblock %}index of

@@ -1,5 +1,5 @@
-{% extends "base.html" %} {% load bootstrap5 %} {% block title %}Join Group{% endblock %} {% block content %}
-<h2 class="top text-center">Delete Group</h2>
+{% extends "base.html" %} {% load bootstrap5 %} {% block title %}Accept User Into Group{% endblock %} {% block content %}
+<h2 class="top text-center">Accept User Into Group</h2>
 <p><b>Are you sure you would like to add this user to this group?</b></p>
 <form method="POST">
   {% csrf_token %} {% bootstrap_form form %}

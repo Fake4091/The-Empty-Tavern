@@ -6,20 +6,21 @@ from app.models import Groups
 
 
 class GroupForm(forms.Form):
+    group_name = forms.CharField(max_length=100)
     group_description = forms.CharField()
     group_pic = forms.ImageField()
-    group_name = forms.CharField(max_length=100)
     game_version = forms.ChoiceField(choices=Groups.GAME_VERSIONS)
 
 
 class ViewGroupsForm(forms.Form):
     game_version = forms.ChoiceField(choices=Groups.GAME_VERSIONS)
+    hide = forms.BooleanField(label="Hide joined groups?", required=False)
 
 
 class EditGroupForm(forms.Form):
+    group_name = forms.CharField(max_length=100, required=False)
     group_description = forms.CharField(required=False)
     group_pic = forms.ImageField(required=False)
-    group_name = forms.CharField(max_length=100, required=False)
     game_version = forms.ChoiceField(choices=Groups.GAME_VERSIONS, required=False)
 
 

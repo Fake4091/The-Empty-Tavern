@@ -64,6 +64,15 @@ body {
   padding: 0 1vw;
 }
 
+.nav-img {
+  padding-top: 0.4em;
+  width: 2em;
+}
+
+.nav-container-img {
+  margin-left: 6vw;
+}
+
 .account {
   right: 3vw;
 }
@@ -83,7 +92,7 @@ body {
 }
 
 .top {
-  margin-top: 7vh;
+  margin-top: 9vh;
 }
 
 .group-filter {
@@ -140,6 +149,7 @@ body {
 
 .btn {
   margin: 0.3em 0;
+  color: #cad3f5 !important;
 }
 
 .btn-danger {
@@ -149,8 +159,7 @@ body {
 a {
   color: #8aadf4;
 }
-
-a:hover {
+c a:hover {
   color: #8aadf4;
 }
 
@@ -177,12 +186,16 @@ a:visited {
 .form-check-input {
   border-radius: 0 !important;
   background-color: #363a4f;
-  border: 1px solid rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0) !important;
 }
 
 .form-check-input:checked {
   background-color: #b7bdf8 !important;
   border-color: rgba(0, 0, 0, 0) !important;
+}
+
+.form-check-label {
+  color: #cad3f5 !important;
 }
 
 .login-btns {
@@ -207,10 +220,20 @@ a:visited {
 .note {
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 1em;
   font-size: 8pt;
 }
 
 .details {
+  text-align: center;
   margin-top: 101vh;
+}
+
+.group-pic {
+  margin: 2em 0;
+  width: 50vw;
+}
+
+.group-desc {
+  margin-bottom: 2em;
 }
